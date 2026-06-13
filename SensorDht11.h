@@ -7,7 +7,6 @@
 class SensorDht11 : public Sensor {
 
     private:
-        uint8_t _pin; // pin al que esta conectado el sensor Dht11
         DHT* _dht; // puntero al objeto DHT para manejar el sensor Dht11
         float _temperatura; // variable para almacenar la temperatura leída por el sensor Dht11
         float _humedad; // variable para almacenar la humedad leída por el sensor Dht11   
@@ -26,7 +25,7 @@ class SensorDht11 : public Sensor {
         float getTemperatura() const; // método para obtener la temperatura leída por el sensor Dht11
         float getHumedad() const; // método para obtener la humedad leída por el sensor Dht11
 
-        void imprimirSerial() const override; // método para imprimir los valores de temperatura y humedad leídos por el sensor Dht11
+        void imprimirValor() const override; // método para imprimir los valores de temperatura y humedad leídos por el sensor Dht11
 
 };
 #endif // SensorDht11_H
