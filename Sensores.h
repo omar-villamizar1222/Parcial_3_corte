@@ -7,18 +7,18 @@ class Sensor {
 
     protected:
         bool activo; // estado del sensor (activo/inactivo)
-        float valor; // valor leido del sensor
         String nombre; // nombre del sensor
+        uint8_t pin; // pin al que esta conectado el sensor
+
 
 /* @brief Constructor de la clase Sensor. 
-/* @param valor: Valor leído por el sensor.
  * @param pin: Pin al que está conectado el sensor.
  * @param nombre: Nombre del sensor.
  */
 
  public:
     
-    Sensor(const String& nombre)
+    Sensor(const String& nombre, uint8_t pin); // constructor para inicializar el nombre y el pin del sensor
            
     virtual ~Sensor(); // destructor virtual por defecto
 
