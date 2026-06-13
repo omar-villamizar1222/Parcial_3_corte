@@ -1,14 +1,14 @@
 #ifndef SENSORES
 #define SENSORES    
 
-#include <string>
+#include <Arduino.h>
 /*@brief clase base abstracta para los sensores, con un metodo virtual puro para obtener la lectura del sensor*/
 class Sensor {
 
     protected:
-        int pin; // pin al que esta conectado el sensor
+        bool activo; // estado del sensor (activo/inactivo)
         float valor; // valor leido del sensor
-        std::string nombre; // nombre del sensor
+        String nombre; // nombre del sensor
 
 /* @brief Constructor de la clase Sensor. 
 /* @param valor: Valor leído por el sensor.
@@ -18,16 +18,19 @@ class Sensor {
 
  public:
     
-    Sensor(float valor, int pin, std::string nombre);
+    Sensor(const String& nombre)
+           
+    virtual ~Sensor(); // destructor virtual por defecto
 
-    virtual ~Sensor() = default; // destructor virtual por defecto
-
-    virtual void leerValor() = 0; // metodo virtual puro para leer el valor del sensor
-
-    virtual void imprimirValor() = 0; // metodo virtual puro para imprimir el valor del sensor
-
+    virtual float leerValor() = 0; // metodo virtual puro para leer el valor del sensor
     float getValor() const; // metodo para obtener el valor del sensor
-    int getPin() const; // metodo para obtener el pin del sensor
-    std::string getNombre() const; // metodo para obtener el nombre del sensor
+    bool isActivo() const; // metodo para obtener el estado del sensor
+    String getNombre() const; // metodo para obtener el nombre del sensor
+
+    void setActivo(bool estado); // metodo para establecer el estado del sensor
+
+    virtual string getUnidad() const; // metodo virtual para obtener la unidad de medida del sensor (sobrescribible por las clases derivadas)
+    virtual void imprimirValor() const; // metodo virtual para imprimir el valor del sensor (sob
+
 };
-#endif
+#endif // SENSORES
