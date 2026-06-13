@@ -9,26 +9,19 @@
 class SensorHumedad : public Sensor {
     
     private:
-        int pin; // Pin al que está conectado el sensor de humedad
-        float valor; // Valor leído del sensor de humedad
-        std::string nombre; // Nombre del sensor 
+        float _humedad; // variable para almacenar el valor de humedad leído por el sensor
     
     public:
         /* @brief Constructor de la clase SensorHumedad, inicializa el pin y el nombre del sensor */
         // @param Pin al que está conectado el sensor de humedad
-        // @param Nombre del sensor de humedad
         // @param porcentaje de humedad leído por el sensor
-        SensorHumedad(int pin, float valor, std::string nombre);
-        /* @brief Método para leer el valor del sensor de humedad, devuelve un porcentaje de humedad */
-        // @return Porcentaje de humedad leído por el sensor
-        void leerValor() override;
-        /* @brief Método para imprimir el valor del sensor de humedad en la LCD 16x2 */ 
-        void imprimirValor() override;
-        
-        //getters 
-        int getPin() const; // Método para obtener el pin del sensor de humedad
-        float getValor() const; // Método para obtener el valor del sensor de humedad
-        std::string getNombre() const; // Método para obtener el nombre del sensor de humedad
-};
+        SensorHumedad(uint8_t pin);
+        ~SensorHumedad(); // destructor para liberar recursos del sensor de humedad
 
+        void leerValor() override; // método para leer el valor del sensor de humedad y actualizar la variable de humedad
+
+        float getHumedad() // método para obtener el valor de humedad leído por el sensor
+        string clasificarHumedad() // método para clasificar el nivel de humedad (bajo, medio, alto) según el valor leído por el sensor
+        void imprimirValor() const override; // método para imprimir el valor de humedad leído por el sensor
+    };
 #endif
