@@ -21,7 +21,7 @@ class SensorHumedad : public Sensor {
         SensorHumedad(int pin, float valor, std::string nombre);
         /* @brief Método para leer el valor del sensor de humedad, devuelve un porcentaje de humedad */
         // @return Porcentaje de humedad leído por el sensor
-        float leerValor() override;
+        void leerValor() override;
         /* @brief Método para imprimir el valor del sensor de humedad en la LCD 16x2 */ 
         void imprimirValor() override;
         
