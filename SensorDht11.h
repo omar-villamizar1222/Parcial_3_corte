@@ -2,31 +2,31 @@
 #define SensorDht11_H
 
 #include "Sensores.h"
+#include <DHT.h>
 
 class SensorDht11 : public Sensor {
-   
-    float temperatura; // Variable para almacenar la temperatura leída por el sensor Dht11
 
     private:
-        int pin; // Pin al que está conectado el sensor de humedad
-        float valor; // Valor leído del sensor de humedad
-        std::string nombre; // Nombre del sensor de humedad
-    
+        uint8_t _pin; // pin al que esta conectado el sensor Dht11
+        DHT* _dht; // puntero al objeto DHT para manejar el sensor Dht11
+        float _temperatura; // variable para almacenar la temperatura leída por el sensor Dht11
+        float _humedad; // variable para almacenar la humedad leída por el sensor Dht11   
     public:
         /* @brief Constructor para la clase SensorDht11, inicializa el pin, el valor y el nombre del sensor Dht11 */
         // @param Pin al que está conectado el sensor Dht11
         // @param Nombre del sensor Dht11
         // @param porcentaje de humedad leído por el sensor
-        SensorDht11(int pin, float valor, std::string nombre, float temperatura);
-        /* @brief Método para leer el valor del sensor Dht11, devuelve un porcentaje de humedad */
-        // @return Porcentaje de humedad leído por el sensor
-        float leerValor() override;
-        /* @brief Método para imprimir el valor del sensor Dht11 en la LCD 16x2 */ 
-        void imprimirValor() override;
+        SensorDht11(uint8_t pin);
         
-        void setTemperatura(float temp); // Método para establecer la temperatura leída por el sensor Dht11
-        //getters 
-        int getPin() const; // Método para obtener el pin del sensor dht11
-        float getValor() const; // Método para obtener la temperatura leída por el sensor Dht11
-        std::string getNombre() const; // Método para obtener que mide el sensor Dht11
+        ~SensorDht11(); // destructor para liberar recursos del objeto DHT
+
+        void leerValor() override; // método para leer el valor del sensor Dht11 y actualizar las variables de temperatura y humedad
+
+        //getters para obtener los valores de temperatura y humedad leídos por el sensor Dht11
+        float getTemperatura() const; // método para obtener la temperatura leída por el sensor Dht11
+        float getHumedad() const; // método para obtener la humedad leída por el sensor Dht11
+
+        void imprimirSerial() const override; // método para imprimir los valores de temperatura y humedad leídos por el sensor Dht11
+
 };
+#endif // SensorDht11_H
