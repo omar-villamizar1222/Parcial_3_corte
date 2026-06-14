@@ -1,4 +1,4 @@
-#include <"SensorDht11.h">
+#include "../include/SensorDht11.h"
 
 SensorDht11::SensorDht11(uint8_t pin) 
     : Sensor("Dht11", pin), _temperatura(0.0f), _humedad(0.0f) {

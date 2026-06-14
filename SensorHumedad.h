@@ -1,11 +1,15 @@
-#ifndef SensorHumedad_H
-#define SensorHumedad_H
-
-#include "Sensores.h"
+#ifndef SENSOR_HUMEDAD
+#define SENSOR_HUMEDAD
 
 /*
- * @brief Clase que representa un sensor de humedad, hereda de la clase Sensor y implementa los métodos para leer e imprimir el valor del sensor.
+ * ============================================================
+ *  SensorSuelo.h — Clase derivada de Sensor
+ *  Lee humedad del suelo vía pin analógico (0–1023)
+ *  y la convierte a porcentaje (0% = seco, 100% = húmedo)
+ * ============================================================
  */
+#include "Sensores.h"
+
 class SensorHumedad : public Sensor {
     
     private:
@@ -20,8 +24,10 @@ class SensorHumedad : public Sensor {
 
         void leerValor() override; // método para leer el valor del sensor de humedad y actualizar la variable de humedad
 
-        float getHumedad() // método para obtener el valor de humedad leído por el sensor
-        string clasificarHumedad() // método para clasificar el nivel de humedad (bajo, medio, alto) según el valor leído por el sensor
+        float getHumedad() const; // método para obtener el valor de humedad leído por el sensor
+        string clasificarHumedad() const; // método para clasificar el nivel de humedad (bajo, medio, alto) según el valor leído por el sensor
+        
         void imprimirValor() const override; // método para imprimir el valor de humedad leído por el sensor
     };
-#endif
+#endif //SensorHumedad
+

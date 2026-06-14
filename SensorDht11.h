@@ -1,10 +1,11 @@
-#ifndef SensorDht11_H
-#define SensorDht11_H
+#ifndef SENSORDHT11_H
+#define SENSORDHT11_H
+
 
 #include "Sensores.h"
 #include <DHT.h>
 
-class SensorDht11 : public Sensor {
+class SensorDht11 : public Sensores{
 
     private:
         DHT* _dht; // puntero al objeto DHT para manejar el sensor Dht11

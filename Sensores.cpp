@@ -1,4 +1,4 @@
-#include "Sensores.h"
+#include <Sensores.h>
 
 Sensores::Sensores(const String& nombre, uint8_t pin) 
     : _nombre(nombre), _pin(pin), _activo(false) {}

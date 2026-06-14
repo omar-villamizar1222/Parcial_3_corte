@@ -1,4 +1,4 @@
-#include "EstacionMeteorologica.h"
+#include "Estacion_Meteoroliga.h"
 
 EstacionMeteorologica::EstacionMeteorologica() 
     : _numSensores(0),pantallaActual(0),
@@ -32,7 +32,7 @@ void EstacionMeteorologica::setRefHumedad(SensorHumedad* s) {
 
 void EstacionMeteorologica::tomarLecturas() {
     for (int i = 0; i < _numSensores; i++) {
-        _sensores[i] && _sensores[i]->isActivo()){
+        _sensores[i] && _sensores[i]->isActivo(){
             _sensores[i]->leerValor(); // lee el valor de cada sensor registrado que esté activo
         }
 }
