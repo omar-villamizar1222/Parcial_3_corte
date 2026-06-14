@@ -20,9 +20,9 @@ class Sensores {
 
  public:
     
-    Sensor(const String& nombre, uint8_t pin); // constructor para inicializar el nombre y el pin del sensor
+    Sensores(const String& nombre, uint8_t pin); // constructor para inicializar el nombre y el pin del sensor
            
-    virtual ~Sensor(); // destructor virtual por defecto
+    virtual ~Sensores(); // destructor virtual por defecto
 
     virtual float leerValor() = 0; // metodo virtual puro para leer el valor del sensor
     

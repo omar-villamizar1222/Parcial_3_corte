@@ -10,7 +10,7 @@
  */
 #include "Sensores.h"
 
-class SensorHumedad : public Sensor {
+class SensorHumedad : public Sensores {
     
     private:
         float _humedad; // variable para almacenar el valor de humedad leído por el sensor

@@ -11,7 +11,7 @@ class EstacionMeteorologica {
         static const int MAX_SENSORES = 10; // número máximo de sensores que la estación meteorológica puede manejar
         static const int TOTAL_PANTALLAS = 16; // número de distintas pantallas que se pueden mostrar en la LCD 16x2
         
-        Sensor* _sensores[MAX_SENSORES]; // arreglo de punteros a objetos Sensor para almacenar
+        Sensores * _sensores[MAX_SENSORES]; // arreglo de punteros a objetos Sensor para almacenar
         int _numSensores; // número actual de sensores registrados en la estación meteorológica
         LiquidCrystal* _lcd; // puntero al objeto LiquidCrystal para manejar la pantalla LCD
 
@@ -29,7 +29,7 @@ public:
         EstacionMeteorologica(LiquidCrystal* lcd); // constructor para inicializar la estación meteorológica
         ~EstacionMeteorologica(); // destructor para liberar recursos de la estación meteorológica
 
-        bool agregarSensor(Sensor* sensor); // método para agregar un nuevo sensor a la estación meteorológica
+        bool agregarSensor(Sensores * sensor); // método para agregar un nuevo sensor a la estación meteorológica
 
         void serRefDHT11(SensorDht11* sensorDht11); // método para establecer el puntero al sensor Dht11 en la estación meteorológica
         void serRefsensorHumedadSuelo(SensorHumedad* sensorHumedad); // método para establecer el puntero al sensor de humedad en la estación meteorológica

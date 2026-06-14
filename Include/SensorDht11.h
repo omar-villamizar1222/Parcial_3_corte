@@ -20,7 +20,7 @@ class SensorDht11 : public Sensores{
         
         ~SensorDht11(); // destructor para liberar recursos del objeto DHT
 
-        void leerValor() override; // método para leer el valor del sensor Dht11 y actualizar las variables de temperatura y humedad
+        float leerValor() override; // método para leer el valor del sensor Dht11 y actualizar las variables de temperatura y humedad
 
         //getters para obtener los valores de temperatura y humedad leídos por el sensor Dht11
         float getTemperatura() const; // método para obtener la temperatura leída por el sensor Dht11

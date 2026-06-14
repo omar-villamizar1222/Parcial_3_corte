@@ -1,7 +1,7 @@
 #include "../include/SensorDht11.h"
 
 SensorDht11::SensorDht11(uint8_t pin) 
-    : Sensor("Dht11", pin), _temperatura(0.0f), _humedad(0.0f) {
+    : Sensores("Dht11", pin), _temperatura(0.0f), _humedad(0.0f) {
     _dht = new DHT(_pin, DHT11); // inicializa el objeto DHT para manejar el sensor Dht11
     _dht->begin(); // inicia la comunicación con el sensor Dht11
     setActivo(true); // establece el sensor como activo
@@ -35,9 +35,9 @@ float SensorDht11::getHumedad() const {
 void SensorDht11::imprimirValor() const {
     Serial.print("Temperatura: ");
     Serial.print(_temperatura);
-    Serial.println(" °C")
+    Serial.println(" °C");
 
-    serial.print("Humedad: ");
+    Serial.print("Humedad: ");
     Serial.print(_humedad,1);
     Serial.println(" %");
 }

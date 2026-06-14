@@ -1,4 +1,4 @@
-#include "Estacion_Meteoroliga.h"
+#include "Estacion_Meteorogica.h"
 
 EstacionMeteorologica::EstacionMeteorologica() 
     : _numSensores(0),pantallaActual(0),
