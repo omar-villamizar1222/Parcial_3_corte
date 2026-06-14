@@ -1,8 +1,9 @@
-#include "Estacion_Meteorogica.h"
+#include "../include/Estacion_Meteorologica.h"
 
-EstacionMeteorologica::EstacionMeteorologica() 
-    : _numSensores(0),pantallaActual(0),
-     _lcd(lcd), _refDht11(refDht11), _refHumedad(refHumedad) {
+
+EstacionMeteorologica::EstacionMeteorologica(LiquidCrystal *lcd) 
+    : _numSensores(0), pantallaActual(0),
+     _lcd(lcd), _sensorDht11(nullptr), _sensorHumedad(nullptr) {
         for (int i = 0; i < MAX_SENSORES; i++) {
             _sensores[i] = nullptr; // inicializa el arreglo de sensores con punteros nulos
         }
@@ -17,29 +18,30 @@ EstacionMeteorologica::~EstacionMeteorologica() {
 }
 
 // Método para registrar un nuevo sensor en la estación meteorológica
-void EstacionMeteorologica::registrarSensor(Sensor* sensor) {
+bool EstacionMeteorologica::agregarSensor (Sensores* sensor) {
     if (_numSensores >=  MAX_SENSORES) return false; // verifica si se ha alcanzado el límite máximo de sensores, si es así, no registra el nuevo sensor
         _sensores[_numSensores++] = sensor; // agrega el nuevo sensor al arreglo y actualiza el número de sensores
     return true; // indica que el sensor se registró exitosamente
 }
 
 void EstacionMeteorologica::setRefDHT11(SensorDht11* s) {
-    _refDht11 = s; // establece la referencia al sensor Dht11 para la estación meteorológica
+     _sensorDht11 = s; // establece la referencia al sensor Dht11 para la estación meteorológica
 }
-void EstacionMeteorologica::setRefHumedad(SensorHumedad* s) {
-    _refHumedad = s; // establece la referencia al sensor de humedad para la estación meteorológica
+void EstacionMeteorologica::setRefsensorHumedadSuelo(SensorHumedad* s) {
+    _sensorHumedad = s; // establece la referencia al sensor de humedad para la estación meteorológica
 }
 
 void EstacionMeteorologica::tomarLecturas() {
     for (int i = 0; i < _numSensores; i++) {
-        _sensores[i] && _sensores[i]->isActivo(){
+        if (_sensores[i] && _sensores[i]->isActivo()){
             _sensores[i]->leerValor(); // lee el valor de cada sensor registrado que esté activo
         }
+    }
 }
 
 // Método para mostrar la información de los sensores en la LCD 16x2, alternando entre diferentes pantallas cada cierto tiempo
 
-void EstacionMeteorologica::mostrarEnLCD() const{
+void EstacionMeteorologica::imprimirValoresSerial() const{
     Serial.println("miniestacion meteorologica");
     for (int i = 0; i < _numSensores; i++) {
         if (_sensores[i]){
@@ -50,12 +52,12 @@ void EstacionMeteorologica::mostrarEnLCD() const{
 
 }
 
-void EstacionMeteorologica::alternarPantalla() {
+void EstacionMeteorologica::SiguientePantalla() {
     pantallaActual = (pantallaActual + 1) % TOTAL_PANTALLAS; // alterna entre las distintas pantallas disponibles
 }
 
-void EstacionMeteorologica::imprimirPantallaTemp(){
-    float temp = _refDht11 ? _refDht11->getTemperatura() : 0.0; // obtiene la temperatura del sensor Dht11, si está disponible
+void EstacionMeteorologica::mostrarPantallaTempAire(){
+    float temp = _sensorDht11 ? _sensorDht11->getTemperatura() : 0.0; // obtiene la temperatura del sensor Dht11, si está disponible
 
     _lcd->clear(); // limpia la pantalla LCD
     _lcd->setCursor(0, 0); // establece el cursor en la primera
@@ -67,8 +69,8 @@ void EstacionMeteorologica::imprimirPantallaTemp(){
 }
 
 //pantalla 1 para mostrar la humedad
-void EstacionMeteorologica::imprimirPantallaHumedad(){
-    float humedad = _refDHT11 ? _refDHT11->getHumedad() : 0.0; // obtiene la humedad del sensor de humedad, si está disponible
+void EstacionMeteorologica::mostrarPantallaHumAire(){
+    float humedad = _sensorDht11 ? _sensorDht11->getHumedad() : 0.0; // obtiene la humedad del sensor de humedad, si está disponible
 
     _lcd->clear(); // limpia la pantalla LCD
     _lcd->setCursor(0, 0); // establece el cursor en la primera línea
@@ -79,8 +81,8 @@ void EstacionMeteorologica::imprimirPantallaHumedad(){
 }
 
 // pantalla 2 humedad del suelo
-void EstacionMeteorologica::imprimirPantallaHumedadSuelo(){
-    float humedadSuelo = _refHumedad ? _refHumedad->getHumedad() : 0.0; // obtiene la humedad del suelo del sensor de humedad, si está disponible
+void EstacionMeteorologica::mostrarPantallaHumSuelo(){
+    float humedadSuelo = _sensorHumedad ? _sensorHumedad->getHumedad() : 0.0; // obtiene la humedad del suelo del sensor de humedad, si está disponible
 
     _lcd->clear(); // limpia la pantalla LCD
     _lcd->setCursor(0, 0); // establece el cursor en la primera línea
@@ -88,24 +90,22 @@ void EstacionMeteorologica::imprimirPantallaHumedadSuelo(){
     _lcd->setCursor(0, 1); // establece el cursor en la segunda línea
     _lcd->print(humedadSuelo, 1); // imprime el valor de humedad del suelo con un decimal en la LCD
     _lcd->print(" %"); // imprime el símbolo de porcentaje en la LCD
-    if (_refHumedad) {
-        string clasificacion = _refHumedad->clasificarHumedad(); // obtiene la clasificación de humedad del suelo (bajo, medio, alto) según el valor leído por el sensor
-        _lcd->setCursor(0, 1); // establece el cursor en la segunda línea
-        _lcd->print(clasificacion.c_str()); // imprime la clasificación de humedad del suelo en la LCD
+    if (_sensorHumedad) {
+    _lcd->print(_sensorHumedad->clasificarHumedad());
     }
 }
 
 //refrescar la pantalla actual
-void EstacionMeteorologica::refrescarPantalla() {
+void EstacionMeteorologica::actualizarPantallaLCD() {
     switch (pantallaActual) {
         case 0:
-            imprimirPantallaTemp(); // muestra la pantalla de temperatura
+            mostrarPantallaTempAire(); // muestra la pantalla de temperatura
             break;
         case 1:
-            imprimirPantallaHumedad(); // muestra la pantalla de humedad
+            mostrarPantallaHumAire(); // muestra la pantalla de humedad
             break;
         case 2:
-            imprimirPantallaHumedadSuelo(); // muestra la pantalla de humedad del suelo
+            mostrarPantallaHumSuelo(); // muestra la pantalla de humedad del suelo
             break;
         default:
             break;
@@ -119,8 +119,8 @@ void EstacionMeteorologica::mostrarInicio(){
     _lcd->setCursor(0, 1); // establece el cursor en la segunda línea
     _lcd->print("Meteorologica"); // imprime el texto "Meteorologica" en la LCD
     delay(2000); // espera 2 segundos antes de mostrar la siguiente pantalla
-    lcd->clear(); // limpia la pantalla LCD
-    lcd->setCursor(0, 0); // establece el cursor en la primera línea
-    lcd->print("Iniciando..."); // imprime el texto "Iniciando..." en la LCD
+    _lcd->clear(); // limpia la pantalla LCD
+    _lcd->setCursor(0, 0); // establece el cursor en la primera línea
+    _lcd->print("Iniciando..."); // imprime el texto "Iniciando..." en la LCD
     delay(2000); // espera 2 segundos antes de mostrar la siguiente pantalla
 }

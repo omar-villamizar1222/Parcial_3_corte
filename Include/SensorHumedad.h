@@ -25,7 +25,7 @@ class SensorHumedad : public Sensores {
         void leerValor() override; // método para leer el valor del sensor de humedad y actualizar la variable de humedad
 
         float getHumedad() const; // método para obtener el valor de humedad leído por el sensor
-        string clasificarHumedad() const; // método para clasificar el nivel de humedad (bajo, medio, alto) según el valor leído por el sensor
+        String clasificarHumedad() const; // método para clasificar el nivel de humedad (bajo, medio, alto) según el valor leído por el sensor
         
         void imprimirValor() const override; // método para imprimir el valor de humedad leído por el sensor
     };

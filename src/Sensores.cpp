@@ -1,11 +1,11 @@
-#include <Sensores.h>
+#include "../include/Sensores.h"
 
 Sensores::Sensores(const String& nombre, uint8_t pin) 
     : _nombre(nombre), _pin(pin), _activo(false) {}
 
 Sensores::~Sensores() {}
 
-string Sensores::getNombre() const {
+String Sensores::getNombre() const {
     return _nombre;
 }
 uint8_t Sensores::getPin() const {

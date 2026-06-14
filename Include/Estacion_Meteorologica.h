@@ -31,13 +31,13 @@ public:
 
         bool agregarSensor(Sensores * sensor); // método para agregar un nuevo sensor a la estación meteorológica
 
-        void serRefDHT11(SensorDht11* sensorDht11); // método para establecer el puntero al sensor Dht11 en la estación meteorológica
-        void serRefsensorHumedadSuelo(SensorHumedad* sensorHumedad); // método para establecer el puntero al sensor de humedad en la estación meteorológica
+        void setRefDHT11(SensorDht11* sensorDht11); // método para establecer el puntero al sensor Dht11 en la estación meteorológica
+        void setRefsensorHumedadSuelo(SensorHumedad* sensorHumedad); // método para establecer el puntero al sensor de humedad en la estación meteorológica
 
         void tomarLecturas(); // método para tomar lecturas de todos los sensores registrados en la estación meteorológica y actualizar la pantalla LCD
-        void imprimirValoresSerial(); // método para imprimir los valores de todos los sensores registrados en la estación meteorológica en el monitor serial
+        void imprimirValoresSerial() const; // método para imprimir los valores de todos los sensores registrados en la estación meteorológica en el monitor serial
         void actualizarPantallaLCD(); // método para actualizar la pantalla LCD con los valores de los sensores registrados en la estación meteorológica
         void SiguientePantalla(); // método para mostrar las diferentes pantallas en la LCD
-        void PantallaAnterior(); // método para mostrar las diferentes pantallas en la LCD
+        void mostrarInicio(); // método para mostrar las diferentes pantallas en la LCD
 };
 #endif

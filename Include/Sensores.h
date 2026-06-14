@@ -24,7 +24,7 @@ class Sensores {
            
     virtual ~Sensores(); // destructor virtual por defecto
 
-    virtual float leerValor() = 0; // metodo virtual puro para leer el valor del sensor
+    virtual void leerValor() = 0; // metodo virtual puro para leer el valor del sensor
     
     bool isActivo() const; // metodo para obtener el estado del sensor
     String getNombre() const; // metodo para obtener el nombre del sensor

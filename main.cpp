@@ -1,14 +1,18 @@
 #include <LiquidCrystal.h>
+#include <Arduino.h>
+#include "../include/SensorDht11.h"
+#include "../include/SensorHumedad.h"
+#include "../include/Estacion_Meteorologica.h"
 
-#include "include/SensorDht11.h"
-#include "include/SensorHumedad.h"
-#include "include/EstacionMeteorologica.h"
-
+SensorDHT11.h"
+SensorHumedad.h"
+Estacion_Meteorologica.h"
 
 // pines
-#define PIN_DHT11 2
-#define PIN_HUMEDAD A0
-#define PIN_BOTON 3
+
+#define PIN_DHT11 15
+#define PIN_HUMEDAD 34
+#define PIN_BOTON 18
 
 // intervalos de refresco de lectura 
 #define INTERVALO_MS 3000

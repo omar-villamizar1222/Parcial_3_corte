@@ -13,8 +13,8 @@ SensorDht11::~SensorDht11() {
 }
 
 void SensorDht11::leerValor() {
-    _t= _dht->readTemperature(); // lee la temperatura del sensor Dht11
-    _h = _dht->readHumidity(); // lee la humedad del sensor Dht11
+    float t= _dht->readTemperature(); // lee la temperatura del sensor Dht11
+    float h = _dht->readHumidity(); // lee la humedad del sensor Dht11
 
     if(!isnan(t)) _temperatura = t; // actualiza la variable de temperatura si la lectura es válida
     if(!isnan(h)) _humedad = h; // actualiza la variable de humedad si la lectura es válida 
