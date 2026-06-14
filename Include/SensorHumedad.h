@@ -1,13 +1,7 @@
 #ifndef SENSOR_HUMEDAD
 #define SENSOR_HUMEDAD
 
-/*
- * ============================================================
- *  SensorSuelo.h — Clase derivada de Sensor
- *  Lee humedad del suelo vía pin analógico (0–1023)
- *  y la convierte a porcentaje (0% = seco, 100% = húmedo)
- * ============================================================
- */
+
 #include "Sensores.h"
 
 class SensorHumedad : public Sensores {

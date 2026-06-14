@@ -1,7 +1,7 @@
 #include "../include/Estacion_Meteorologica.h"
 
 
-EstacionMeteorologica::EstacionMeteorologica(LiquidCrystal *lcd) 
+EstacionMeteorologica::EstacionMeteorologica(LiquidCrystal_I2C* lcd) 
     : _numSensores(0), pantallaActual(0),
      _lcd(lcd), _sensorDht11(nullptr), _sensorHumedad(nullptr) {
         for (int i = 0; i < MAX_SENSORES; i++) {
@@ -13,7 +13,8 @@ EstacionMeteorologica::EstacionMeteorologica(LiquidCrystal *lcd)
 //destructor para liberar recursos de los sensores registrados en la estación meteorológica
 EstacionMeteorologica::~EstacionMeteorologica() {
     for (int i = 0; i < _numSensores; i++) {
-        delete _sensores[i]; // libera la memoria de cada sensor registrado
+        delete _sensores[i];
+        _sensores[i] = nullptr; // libera la memoria de cada sensor registrado
     }
 }
 
@@ -112,7 +113,7 @@ void EstacionMeteorologica::actualizarPantallaLCD() {
     }
 }
 
-void EstacionMeteorologica::mostrarInicio(){
+void EstacionMeteorologica::mostrarInicio() {
     _lcd->clear(); // limpia la pantalla LCD
     _lcd->setCursor(0, 0); // establece el cursor en la primera línea
     _lcd->print("Miniestacion"); // imprime el texto "Miniestacion" en la LCD

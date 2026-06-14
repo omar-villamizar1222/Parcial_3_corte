@@ -4,7 +4,7 @@
 #include "SensorDht11.h"
 #include "SensorHumedad.h"
 #include "Sensores.h"
-#include <LiquidCrystal.h>
+#include <LiquidCrystal_I2C.h>
 
 class EstacionMeteorologica {
     private:
@@ -13,7 +13,7 @@ class EstacionMeteorologica {
         
         Sensores * _sensores[MAX_SENSORES]; // arreglo de punteros a objetos Sensor para almacenar
         int _numSensores; // número actual de sensores registrados en la estación meteorológica
-        LiquidCrystal* _lcd; // puntero al objeto LiquidCrystal para manejar la pantalla LCD
+        LiquidCrystal_I2C* _lcd; // puntero al objeto LiquidCrystal para manejar la pantalla LCD
 
         SensorDht11* _sensorDht11; // puntero al objeto SensorDht11 para manejar el sensor de temperatura y humedad Dht11
         SensorHumedad* _sensorHumedad; // puntero al objeto SensorH
@@ -26,7 +26,7 @@ public:
      
         volatile int pantallaActual; // variable para almacenar la pantalla actual que se muestra en la LCD, marcada como volatile para indicar que puede ser modificada por interrupciones u otros procesos concurrentes
 
-        EstacionMeteorologica(LiquidCrystal* lcd); // constructor para inicializar la estación meteorológica
+        EstacionMeteorologica(LiquidCrystal_I2C* lcd); // constructor para inicializar la estación meteorológica
         ~EstacionMeteorologica(); // destructor para liberar recursos de la estación meteorológica
 
         bool agregarSensor(Sensores * sensor); // método para agregar un nuevo sensor a la estación meteorológica

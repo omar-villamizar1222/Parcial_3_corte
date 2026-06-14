@@ -1,12 +1,8 @@
-#include <LiquidCrystal.h>
+#include <LiquidCrystal_I2C.h>
 #include <Arduino.h>
-#include "../include/SensorDht11.h"
-#include "../include/SensorHumedad.h"
-#include "../include/Estacion_Meteorologica.h"
-
-SensorDHT11.h"
-SensorHumedad.h"
-Estacion_Meteorologica.h"
+#include "SensorDht11.h"
+#include "SensorHumedad.h"
+#include "Estacion_Meteorologica.h"
 
 // pines
 
@@ -19,7 +15,7 @@ Estacion_Meteorologica.h"
 
 /// lcd
 
-liquidCrystal lcd(d14,d27);
+LiquidCrystal_I2C lcd(0x27);
 
 EstacionMeteorologica* estacion = nullptr;
 
@@ -27,7 +23,7 @@ EstacionMeteorologica* estacion = nullptr;
 volatile bool botonPresionado = false;
 volatile unsigned long ultimoTiempoBoton = 0;
 
-void ISR_boton() {
+void IRAM_ATTR ISR_boton () {
   unsigned long tiempoActual = millis();
   if (tiempoActual - ultimoTiempoBoton > 200) { // debounce de 200ms
     botonPresionado = true;
@@ -35,41 +31,41 @@ void ISR_boton() {
   }
 }
 
-void setud(){
-    Serial.begin(9600);
+void setup(){
+    Serial.begin(115200);
     lcd.begin(16,2);
 
     pinMode(PIN_BOTON, INPUT_PULLUP);
 
-    attachInterrupt(digitalPintoInterrupt(PIN_BOTON),
+    attachInterrupt(digitalPinToInterrupt(PIN_BOTON),
                     ISR_boton, FALLING);
     
     estacion = new EstacionMeteorologica(&lcd);
 
     //crear sensores con new
-    SensorDHT11 * sDHT11 = new SensorDHT11(PIN_DHT);
-    SensorHumedad* sHumedad = new SensorDHT11(PIN_SUELO);
+    SensorDht11 * sDHT11 = new SensorDht11(PIN_DHT11);
+    SensorHumedad* sHumedad = new SensorHumedad(PIN_HUMEDAD);
 
     estacion->agregarSensor(sDHT11);
-    estacion->agregarSensor(sSuelo);
+    estacion->agregarSensor(sHumedad);
     estacion->setRefDHT11(sDHT11);
-    estacion->setRefSuelo(sSuelo);
+    estacion->setRefsensorHumedadSuelo(sHumedad);
     
-    estacio-> mostrarInicio;
+    estacion->mostrarInicio();
 
     //mostrar pantalla inicial
     estacion->tomarLecturas();
-    estacion->refrescarLCD();
+    estacion->actualizarPantallaLCD();
 
     Serial.println("Sistema iniciado correctamente");
 }
 
 void loop(){
     if(botonPresionado){
-        bontonPresionado = false;
-        estacion->siguientePantalla();
-        estacion->refrescarLCD();
-        Serial.print("pantalla: ")
+        botonPresionado = false;
+        estacion->SiguientePantalla();
+        estacion->actualizarPantallaLCD();
+        Serial.print("pantalla: ");
         Serial.println(estacion->pantallaActual);
     }
    //lecturas periodicas
@@ -79,7 +75,7 @@ void loop(){
    if (ahora - ultimaLectura >= INTERVALO_MS){
     ultimaLectura = ahora; 
     estacion->tomarLecturas();
-    estacion->mostrarEnSerial();
-    estacion->refrescarLCD();
+    estacion->imprimirValoresSerial();
+    estacion->actualizarPantallaLCD();
    }
 }
