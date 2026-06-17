@@ -10,6 +10,9 @@
 #define PIN_HUMEDAD 34
 #define PIN_BOTON 18
 
+#define PIN_LED_SECO    25
+#define PIN_LED_OPTIMO  26
+#define PIN_LED_HUMEDO  27
 // intervalos de refresco de lectura 
 #define INTERVALO_MS 3000
 
@@ -50,7 +53,9 @@ void setup(){
     estacion->agregarSensor(sHumedad);
     estacion->setRefDHT11(sDHT11);
     estacion->setRefsensorHumedadSuelo(sHumedad);
-    
+
+    estacion->configurarLeds(PIN_LED_SECO, PIN_LED_OPTIMO, PIN_LED_HUMEDO);
+
     estacion->mostrarInicio();
 
     //mostrar pantalla inicial

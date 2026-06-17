@@ -7,6 +7,9 @@ EstacionMeteorologica::EstacionMeteorologica(LiquidCrystal_I2C* lcd)
         for (int i = 0; i < MAX_SENSORES; i++) {
             _sensores[i] = nullptr; // inicializa el arreglo de sensores con punteros nulos
         }
+        for (int i = 0; i < NUM_LEDS ; i++){
+            _pinesLed[i] =0;
+        }
     // Constructor por defecto, inicializa el número de sensores a 0
 }
 
@@ -31,7 +34,29 @@ void EstacionMeteorologica::setRefDHT11(SensorDht11* s) {
 void EstacionMeteorologica::setRefsensorHumedadSuelo(SensorHumedad* s) {
     _sensorHumedad = s; // establece la referencia al sensor de humedad para la estación meteorológica
 }
+void EstacionMeteorologica::configurarLeds(uint8_t pinSeco,
+                                            uint8_t pinOptimo,
+                                            uint8_t pinHumedo) {
+  _pinesLed[0] = pinSeco;
+  _pinesLed[1] = pinOptimo;
+  _pinesLed[2] = pinHumedo;
 
+  for (int i = 0; i < NUM_LEDS; i++) {
+    pinMode(_pinesLed[i], OUTPUT);
+    digitalWrite(_pinesLed[i], LOW);  // Apagados al inicio
+  }
+}
+
+// ── Encender solo el LED de la categoría actual ───────────────
+void EstacionMeteorologica::actualizarLeds() {
+  if (!_sensorHumedad) return;
+
+  int categoria = _sensorHumedad->indiceCategoria();  // 0, 1 o 2
+
+  for (int i = 0; i < NUM_LEDS; i++) {
+    digitalWrite(_pinesLed[i], (i == categoria) ? HIGH : LOW);
+  }
+}
 void EstacionMeteorologica::tomarLecturas() {
     for (int i = 0; i < _numSensores; i++) {
         if (_sensores[i] && _sensores[i]->isActivo()){
