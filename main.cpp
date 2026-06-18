@@ -6,13 +6,13 @@
 
 // pines
 
-#define PIN_DHT11 15
-#define PIN_HUMEDAD 34
-#define PIN_BOTON 18
+#define PIN_DHT11 2
+#define PIN_HUMEDAD 33
+#define PIN_BOTON 25
 
-#define PIN_LED_SECO    25
-#define PIN_LED_OPTIMO  26
-#define PIN_LED_HUMEDO  27
+#define PIN_LED_SECO    32
+#define PIN_LED_OPTIMO  35
+#define PIN_LED_HUMEDO  34
 // intervalos de refresco de lectura 
 #define INTERVALO_MS 3000
 
