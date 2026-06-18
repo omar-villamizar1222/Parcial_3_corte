@@ -32,7 +32,7 @@ class Sensores {
     
     void setActivo(bool estado); // metodo para establecer el estado del sensor
 
-    virtual void imprimirValor() const; // metodo virtual para imprimir el valor del sensor (sob
+    virtual void imprimirValor() const = 0; // metodo virtual para imprimir el valor del sensor (sob
 
 };
 #endif // SENSORES
