@@ -65,7 +65,7 @@ void setup(){
     Serial.println("Sistema iniciado correctamente");
 }
 
-void loop(){
+void loop() {
     if(botonPresionado){
         botonPresionado = false;
         estacion->SiguientePantalla();
