@@ -6,7 +6,7 @@
 
 // pines
 
-#define PIN_DHT11 2
+#define PIN_DHT11 23
 #define PIN_HUMEDAD 33
 #define PIN_BOTON 25
 
